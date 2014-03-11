@@ -1,0 +1,26 @@
+{
+  "name": "advk",
+  "version": "0.0.1",
+  "description": "Lightweight abstraction for executing task runners like Grunt, Gulp, etc.",
+  "bin": {
+    "advk": "./bin/advk"
+  },
+  "main": "aardvark.js",
+  "keywords": ["grunt", "gulp", "task", "cli", "tool"],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:orionhealth/aardvark.git"
+  },
+  "author": {
+    "name": "James Bunt",
+    "email": "james.bunt@gmail.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/orionhealth/aardvark/issues"
+  },
+  "homepage": "https://github.com/orionhealth/aardvark"
+}
