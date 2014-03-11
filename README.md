@@ -13,7 +13,7 @@ $ npm install -g advk
 
 ### Usage
 
-Create a `.advk.json` file in your project directory (or once of its ancestors) to tell Aardvark where to find your task runner and how to execute it.
+Create a `.advk.json` file in your project directory (or one of its ancestors) to tell Aardvark where to find your task runner and how to execute it.
 
 ```json
 {
