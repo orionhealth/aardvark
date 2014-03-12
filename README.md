@@ -17,15 +17,15 @@ Create a `.advk.json` file in your project directory (or one of its ancestors) t
 
 ```json
 {
-    "targetDir": "path/to/gruntjs",
-    "bin": "grunt",
-    "workingDirProperty": "--cwd"
+    "taskRunnerDir": "path/to/gruntjs",
+    "taskRunnerBin": "grunt",
+    "workingDirArg": "--cwd"
 }
 ```
 
-- **targetDir** - path to the task runner. This is where your `Gruntfile.js`, `gulpfile.js`, etc lives; at the very least should contain a `package.json`. Aardvark will perform an `npm install` in this directory if necessary.
-- **bin** - the name of the bin file for the task runner e.g. `grunt`, `gulp`, etc.
-- **workingDirProperty** - name of the property to specify the working directory to run the tasks on (i.e. the directory you ran `advk` from)
+- **taskRunnerDir** - path to the task runner. This is where your `Gruntfile.js`, `gulpfile.js`, etc lives; at the very least should contain a `package.json`. Aardvark will perform an `npm install` in this directory if necessary.
+- **taskRunnerBin** - the name of the bin file for the task runner e.g. `grunt`, `gulp`, etc.
+- **workingDirArg** - name of the commandline arg to specify the working directory to run the tasks on (i.e. the directory you ran `advk` from)
 
 Execute `advk` in the directory you want to run tasks on, all arguments are passed through to the relevant task runner.
 

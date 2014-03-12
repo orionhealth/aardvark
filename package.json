@@ -1,6 +1,6 @@
 {
   "name": "advk",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Lightweight abstraction for executing task runners like Grunt, Gulp, etc.",
   "bin": {
     "advk": "./bin/advk"

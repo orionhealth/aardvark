@@ -55,7 +55,7 @@ function findProperties(dir, callback) {
 
 			try {
 				properties = JSON.parse(contents);
-				properties.targetDir = path.resolve(dir, properties.targetDir);
+				properties.taskRunnerDir = path.resolve(dir, properties.taskRunnerDir);
 
 				callback(null, properties);
 			} catch(e) {
@@ -97,17 +97,17 @@ function statFile(file) {
 	};
 }
 
-function ensureDependencies(targetDir, callback) {
-	var nodeModulesDir = path.join(targetDir, 'node_modules');
+function ensureDependencies(taskRunnerDir, callback) {
+	var nodeModulesDir = path.join(taskRunnerDir, 'node_modules');
 
 	fs.exists(nodeModulesDir, function(exists) {
 		if (!exists) {
-			return npmInstall(targetDir, callback);
+			return npmInstall(taskRunnerDir, callback);
 		}
 
 		all([
 			statFile(nodeModulesDir),
-			statFile(path.join(targetDir, 'package.json'))
+			statFile(path.join(taskRunnerDir, 'package.json'))
 		], function(err, stats) {
 			if (err) {
 				return callback(err);
@@ -121,7 +121,7 @@ function ensureDependencies(targetDir, callback) {
 			}
 
 			if (packageJsonStats.mtime.getTime() > nodeModulesStats.mtime.getTime()) {
-				npmInstall(targetDir, callback);
+				npmInstall(taskRunnerDir, callback);
 			} else {
 				callback();
 			}
@@ -146,8 +146,8 @@ function exec(cmd, args, cwd, callback) {
 		.on('exit', callback);
 }
 
-function npmInstall(targetDir, callback) {
-	exec('npm', ['install'/*, '--production'*/], targetDir, function(code) {
+function npmInstall(taskRunnerDir, callback) {
+	exec('npm', ['install'/*, '--production'*/], taskRunnerDir, function(code) {
 		callback(code ? ('npm install exited with code ' + code) : null);
 	});
 }
@@ -158,14 +158,14 @@ function logAndExit(err) {
 }
 
 function execTaskRunner(properties) {
-	var args = [properties.workingDirProperty, cwd].concat(process.argv.slice(2)),
-		targetDir = properties.targetDir;
+	var args = [properties.workingDirArg, cwd].concat(process.argv.slice(2)),
+		taskRunnerDir = properties.taskRunnerDir;
 
 	console.timeEnd(TS_TIME_TO_EXEC);
 
-	exec(path.join(targetDir, 'node_modules', '.bin', properties.bin), args, targetDir, function(code) {
+	exec(path.join(taskRunnerDir, 'node_modules', '.bin', properties.taskRunnerBin), args, taskRunnerDir, function(code) {
 		if (code) {
-			logAndExit(properties.bin + ' process exited with code ' + code);
+			logAndExit(properties.taskRunnerBin + ' process exited with code ' + code);
 		}
 	});
 }
@@ -175,12 +175,12 @@ findProperties(cwd, function(err, properties) {
 		return logAndExit(err);
 	}
 
-	isExistingDirectory(properties.targetDir, function(err, exists) {
+	isExistingDirectory(properties.taskRunnerDir, function(err, exists) {
 		if (err || !exists) {
-			return logAndExit(err || 'Specified targetDir "' + properties.targetDir + '" not found.');
+			return logAndExit(err || 'Specified taskRunnerDir "' + properties.taskRunnerDir + '" not found.');
 		}
 
-		ensureDependencies(properties.targetDir, function(err) {
+		ensureDependencies(properties.taskRunnerDir, function(err) {
 			if (err) {
 				return logAndExit(err);
 			}
