@@ -35,7 +35,7 @@ function findProperties(dir, callback) {
 	function next() {
 		var parentDir = path.join(dir, '../');
 		if (parentDir === dir) {
-			callback('No .advk.json file found in the folder heirarchy');
+			callback('No .advk.json file found in the folder hierarchy');
 		} else {
 			findProperties(parentDir, callback);
 		}
